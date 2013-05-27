@@ -1,0 +1,17 @@
+{
+    "name": "dashboard",
+    "version": "0.0.0",
+    "dependencies": {
+        "express": "3.0.5",
+        "jade": "*",
+        "q": "*",
+        "restler": "*",
+        "mongodb" : "*"
+    },
+    "devDependencies": {
+        "nodeunit" : "*"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    }
+}
