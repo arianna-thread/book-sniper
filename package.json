@@ -6,12 +6,13 @@
         "jade": "*",
         "q": "*",
         "restler": "*",
-        "mongodb" : "*"
+        "mongodb": "*",
+        "apac": "0.0.11"
     },
     "devDependencies": {
-        "nodeunit" : "*"
+        "nodeunit": "*"
     },
     "engines": {
-        "node": ">=0.8.0"
+        "node": "0.10.0"
     }
 }
