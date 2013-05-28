@@ -1,10 +1,11 @@
 //this is the itunes plugin
 'use strict';
-var rest = require('restler');
-var Q = require('Q');
-var googleAPIKey = 'AIzaSyCsdnr6l5YAdGIXZSMCjHJ9V4hq67ypc64';
-var lookupItunes = 'https://itunes.apple.com/lookup';
-var lookupGoogle = 'https://www.googleapis.com/books/v1/volumes';
+var rest = require('restler'),
+    Q = require('Q'),
+    googleAPIKey = 'AIzaSyCsdnr6l5YAdGIXZSMCjHJ9V4hq67ypc64',
+    lookupItunes = 'https://itunes.apple.com/lookup',
+    lookupGoogle = 'https://www.googleapis.com/books/v1/volumes',
+    pluginError = require('./../../../errors/pluginError.js');
 
 function uriParser(uri) {
     var uriArray = uri.split('/');
@@ -22,32 +23,25 @@ exports['getByURI'] = function(uri) {
     }).on('success', function(data) {
         data = JSON.parse(data);
         if (data.resultCount === 0) {
-            defer.reject({
-                error: 'bookIdNotValid'
-            });
+            defer.reject(pluginError.factory('invalidURI'));
             return;
         }
         item.uri = uri;
         item.price = data.results[0].price;
         item.title = data.results[0].trackCensoredName;
         item.author = data.results[0].artistName;
-        console.log(item);
+        // console.log(item);
         rest.get(lookupGoogle, {
             query: {
                 q: 'intitle:' + item.title + '+inauthor:' + item.author,
                 key: googleAPIKey
             }
         }).on("success", function(data) {
-            console.log(data);
+            // console.log(data);
             if (data.totalItems === 0) {
-                defer.reject({
-                    error: 'noISBN'
-                });
+                defer.reject(pluginError.factory('invalidURI'));
                 return;
             }
-
-
-
             data.items[0].volumeInfo.industryIdentifiers.forEach(function(el) {
                 if (el.type === 'ISBN_13') {
                     item.isbn = el.identifier;
@@ -56,15 +50,11 @@ exports['getByURI'] = function(uri) {
             defer.resolve(item);
 
         }).on('fail', function(data) {
-            defer.reject({
-                error: 'failISBN'
-            });
+            defer.reject(pluginError.factory('invalidURI'));
         });
 
     }).on('fail', function(data) {
-        defer.reject({
-            error: 'failITUNES'
-        });
+        defer.reject(pluginError.factory('invalidURI'));
 
     });
     return defer.promise;
@@ -82,9 +72,7 @@ exports['getByISBN'] = function(isbn) {
     }).on('success', function(data) {
         data = JSON.parse(data);
         if (data.resultCount === 0) {
-            defer.reject({
-                error: 'bookIdNotValid'
-            });
+            defer.reject(pluginError.factory('invalidISBN'));
             return;
         }
 
@@ -95,9 +83,7 @@ exports['getByISBN'] = function(isbn) {
         item.isbn = isbn;
         defer.resolve(item);
     }).on('fail', function() {
-        defer.reject({
-            error: 'failIsbnITUNES'
-        });
+        defer.reject(pluginError.factory('invalidISBN'));
     });
     return defer.promise;
 

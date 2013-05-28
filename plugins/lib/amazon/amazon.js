@@ -1,5 +1,7 @@
 var OperationHelper = require('apac').OperationHelper,
-    Q = require('Q');
+    Q = require('Q'),
+    pluginError = require('./../../../errors/pluginError.js');
+
 // var opHelper = new OperationHelper({
 //     awsId: 'AKIAJIM5WYAJLUU32ZRQ',
 //     awsSecret: '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',
@@ -19,10 +21,10 @@ exports['getByURI'] = function(uri) {
 
 var getByISBN = function(isbn) {
     var opHelper = new OperationHelper({
-    awsId: 'AKIAJIM5WYAJLUU32ZRQ',
-    awsSecret: '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',
-    assocId: '6df06f5e8d6c5d3bf588a432c52fdc69cfc1c88b5f9d2d6636332c9a5eab3e09'
-});
+        awsId: 'AKIAJIM5WYAJLUU32ZRQ',
+        awsSecret: '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',
+        assocId: '6df06f5e8d6c5d3bf588a432c52fdc69cfc1c88b5f9d2d6636332c9a5eab3e09'
+    });
     var defer = Q.defer();
     var item;
     opHelper.execute('ItemLookup', {
@@ -32,8 +34,7 @@ var getByISBN = function(isbn) {
         'ResponseGroup': 'Medium'
     }, function(error, results) {
         if (results.ItemLookupResponse.Items[0].Request[0].Errors) {
-            console.log('invalidISBN');
-            defer.resolve('invalidISBN');
+            defer.resolve(pluginError.factory('invalidISBN'));
             return;
         }
 
