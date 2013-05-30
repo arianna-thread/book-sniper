@@ -1,4 +1,4 @@
-plugin = require('../../../lib/plugins/amazon/amazon.js');
+plugin = require('../../../lib/pluginManager/plugins/amazon/amazon.js');
 var lookup = 'http://www.amazon.com/gp/product/1579654924/ref=s9_al_bw_g14_ir04?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-3&pf_rd_r=189D4777EEA342BC85AF&pf_rd_t=101&pf_rd_p=1546559002&pf_rd_i=390919011';
 
 

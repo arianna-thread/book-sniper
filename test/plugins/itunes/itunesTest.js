@@ -1,9 +1,10 @@
-var itunesPlugin = require('../../../lib/plugins/itunes/itunes.js');
+var itunesPlugin = require('../../../lib/pluginManager/plugins/itunes/itunes.js');
 var itunesLookup = 'https://itunes.apple.com/us/book/steve-jobs/id431617578?mt=11';
 var invaliditunesLookup = 'https://itunes.apple.com/us/book/steve-jobs/id4316asd17578?mt=11';
 
 
 exports['getByURI'] = function(test) {
+    
     test.expect(1);
     itunesPlugin.getByURI(itunesLookup).then(function(data) {
         test.equal(data.price, 16.99);
