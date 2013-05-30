@@ -1,4 +1,4 @@
-var itunesPlugin = require('../../../plugins/lib/itunes/itunes.js');
+var itunesPlugin = require('../../../lib/plugins/itunes/itunes.js');
 var itunesLookup = 'https://itunes.apple.com/us/book/steve-jobs/id431617578?mt=11';
 var invaliditunesLookup = 'https://itunes.apple.com/us/book/steve-jobs/id4316asd17578?mt=11';
 

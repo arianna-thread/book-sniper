@@ -1,4 +1,5 @@
 exports['factory'] = function(message, err) {
+    // console.log(message);
     var errorConf = {
         invalidISBN: 0,
         invalidURI: 1,

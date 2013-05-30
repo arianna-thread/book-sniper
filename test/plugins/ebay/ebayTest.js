@@ -1,4 +1,4 @@
-var ebayPlugin = require('../../../plugins/lib/ebay/ebay.js');
+var ebayPlugin = require('../../../lib/plugins/ebay/ebay.js');
 var ebayLookup = "http://product.half.ebay.com/1984-by-George-Orwell-1950-Paperback-Anniversary/372689&tg=info";
 var ebayLookupInvalid = "http://product.half.ebay.com/1984-by-George-Orwell-1950-Paperback-Anniversary/37268900000&tg=info";
 
@@ -42,6 +42,7 @@ exports['invalidURI'] = function(test) {
         test.equal(0, 1);
         test.done();
     }).fail(function(data) {
+        console.log(data);
         test.equal(data.code, 1);
         test.done();
     });
