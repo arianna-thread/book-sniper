@@ -14,7 +14,8 @@
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "0.4.0rc7",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-regarde": "~0.1.1"
+    "grunt-regarde": "~0.1.1",
+    "matchdep": "~0.1.1"
   },
   "engines": {
     "node": "0.10.0"
