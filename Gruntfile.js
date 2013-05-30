@@ -13,14 +13,14 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
-            coffee: {
-                files: ['<%= yeoman.app %>/lib/{,*/}*.coffee'],
-                tasks: ['coffee']
+            test: {
+                files: ['<%= yeoman.app %>/lib/**/*.coffee','test/**/*.coffee'],
+                tasks: ['coffee', 'jasmine-node']
             },
-            coffeeTest: {
-                files: ['test/spec/{,*/}*.coffee'],
-                tasks: ['coffee:test']
-            },
+            // teest: {
+            //     files: ['test/spec/{,*/}*.coffee'],
+            //     tasks: ['coffee:test']
+            // },
         },
         clean: {
             models: ['.tmp', '<%= yeoman.dist %>/*'],
@@ -38,26 +38,40 @@ module.exports = function (grunt) {
                     cwd: 'lib/models/coffee',
                     src: '*.coffee',
                     dest: 'lib/models/',
-                    ext: '-build.js',
+                    ext: '.js',
                 }]
             },
         },
         nodeunit: {
             all: ['test/plugins/{,*/}*Test.js']
+        },
+        'jasmine-node': {
+            options: {
+                coffee: true
+            },
+            run: {
+                spec: ['test/models/', 'test/models/dummy-spec.coffee']
+            },
+            // env: {
+            //     NODE_PATH: 'lib/js'
+            // }
         }
     });
 
     grunt.renameTask('regarde', 'watch');
     // remove when mincss task is renamed
 
+    grunt.registerTask('livetest', [
+        'watch'
+    ]);
 
 
     grunt.registerTask('test', [
-        'clean:server',
+        // 'clean:server',
         'coffee',
-        'compass',
-        'connect:test',
-        'karma'
+        // 'compass',
+        // 'connect:test',
+        'jasmine-node'
     ]);
 
     grunt.registerTask('build', [
