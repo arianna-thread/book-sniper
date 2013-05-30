@@ -16,7 +16,7 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-regarde": "~0.1.1",
     "matchdep": "~0.1.1",
-    "grunt-contrib-jasmine-node": "~0.1.0"
+    "grunt-contrib-jasmine-node": "git://github.com/artoale/grunt-contrib-jasmine-node.git"
   },
   "engines": {
     "node": "0.10.0"
