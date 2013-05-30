@@ -1,0 +1,18 @@
+{
+	"amazon": {
+		"path": "./plugins/amazon/amazon.js",
+		"options": {}
+	},
+	"googleBooks": {
+		"path": "./plugins/googleBooks",
+		"options": {}
+	},
+	"itunes": {
+		"path": "./plugins/itunes/itunes.js",
+		"options": {}
+	},
+	"ebay": {
+		"path": "./plugins/ebay/ebay.js",
+		"options": {}
+	}
+}

@@ -1,4 +1,4 @@
-var googlePlugin = require('../../../lib/plugins/googleBooks/googleBooks.js');
+var googlePlugin = require('../../../lib/pluginManager/plugins/googleBooks/googleBooks.js');
 var googleLookup = 'http://books.google.fr/books?id=swsZuHxsJDwC&printsec=frontcover&dq=isbn:9782709638821&hl=&cd=1&source=gbs_api';
 exports['getByURI'] = function(test) {
     test.expect(1);

@@ -16,3 +16,4 @@ npm-debug.log
 .DS_Store
 node_modules
 .sass-cache
+lib/pluginManager/secrets.json

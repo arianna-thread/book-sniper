@@ -1,6 +1,7 @@
-var ebayPlugin = require('../../../lib/plugins/ebay/ebay.js');
+var ebayPlugin = require('../../../lib/pluginManager/plugins/ebay/ebay.js');
 var ebayLookup = "http://product.half.ebay.com/1984-by-George-Orwell-1950-Paperback-Anniversary/372689&tg=info";
 var ebayLookupInvalid = "http://product.half.ebay.com/1984-by-George-Orwell-1950-Paperback-Anniversary/37268900000&tg=info";
+
 
 
 exports['getByISBN'] = function(test) {
