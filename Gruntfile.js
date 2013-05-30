@@ -50,8 +50,9 @@ module.exports = function (grunt) {
                 coffee: true
             },
             run: {
-                spec: ['test/models/', 'test/models/dummy-spec.coffee']
+                spec: ['test/models/']
             },
+
             // env: {
             //     NODE_PATH: 'lib/js'
             // }
