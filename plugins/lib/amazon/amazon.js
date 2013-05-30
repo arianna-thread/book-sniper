@@ -1,3 +1,4 @@
+'use strict';
 var OperationHelper = require('apac').OperationHelper,
     Q = require('Q'),
     pluginError = require('./../../../errors/pluginError.js');
@@ -13,10 +14,7 @@ function uriParser(uri) {
     return uri.split('/')[5];
 }
 
-exports['getByURI'] = function(uri) {
-    var idResource = uriParser(uri);
-    return getByISBN(idResource);
-};
+
 
 
 var getByISBN = function(isbn) {
@@ -51,5 +49,9 @@ var getByISBN = function(isbn) {
 };
 
 
+exports.getByURI = function(uri) {
+    var idResource = uriParser(uri);
+    return getByISBN(idResource);
+};
 
-exports['getByISBN'] = getByISBN;
+exports.getByISBN = getByISBN;
