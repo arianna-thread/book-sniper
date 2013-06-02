@@ -45,9 +45,9 @@ module.exports = function(grunt) {
             mocks: {
                 files: [{
                         expand: true,
-                        cwd: 'test/mocks/',
+                        cwd: 'test/models/mocks',
                         src: '*.coffee',
-                        dest: 'test/mocks/',
+                        dest: 'test/models/mocks',
                         ext: '.js',
                     }
                 ]
