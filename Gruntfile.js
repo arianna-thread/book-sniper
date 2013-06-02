@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         yeoman: yeomanConfig,
         watch: {
             test: {
-                files: ['<%= yeoman.app %>/lib/**/*.coffee', 'test/**/*.coffee', 'lib/**/*.js'],
+                files: ['<%= yeoman.app %>/lib/**/*.coffee', 'test/**/*.coffee', 'lib/pluginManager/**/*.js'],
                 tasks: ['coffee', 'jasmine-node:livetest']
             },
             // teest: {
@@ -34,21 +34,23 @@ module.exports = function(grunt) {
         coffee: {
             models: {
                 files: [{
-                    expand: true,
-                    cwd: 'lib/models/coffee',
-                    src: '*.coffee',
-                    dest: 'lib/models/',
-                    ext: '.js',
-                }]
+                        expand: true,
+                        cwd: 'lib/models/coffee',
+                        src: '*.coffee',
+                        dest: 'lib/models/',
+                        ext: '.js',
+                    }
+                ]
             },
             mocks: {
                 files: [{
-                    expand: true,
-                    cwd: 'test/mocks/',
-                    src: '*.coffee',
-                    dest: 'test/mocks/',
-                    ext: '.js',
-                }]
+                        expand: true,
+                        cwd: 'test/mocks/',
+                        src: '*.coffee',
+                        dest: 'test/mocks/',
+                        ext: '.js',
+                    }
+                ]
             }
         },
         nodeunit: {
@@ -64,7 +66,7 @@ module.exports = function(grunt) {
                     forceexit: true,
                     forceReturnTrue: true
                 },
-                src: ['test/**/*.coffee'],
+                src: ['test/plugins/**/*.coffee'],
             },
             travis: {
                 options: {
@@ -86,7 +88,7 @@ module.exports = function(grunt) {
     // remove when mincss task is renamed
 
     grunt.registerTask('livetest', [
-        'watch'
+            'watch'
     ]);
 
 
@@ -99,21 +101,21 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean:dist',
-        'jshint',
-        'test',
-        'coffee',
-        'compass:dist',
-        'useminPrepare',
-        'imagemin',
-        'cssmin',
-        'htmlmin',
-        'concat',
-        'copy',
-        'cdnify',
-        'usemin',
-        'ngmin',
-        'uglify'
+            'clean:dist',
+            'jshint',
+            'test',
+            'coffee',
+            'compass:dist',
+            'useminPrepare',
+            'imagemin',
+            'cssmin',
+            'htmlmin',
+            'concat',
+            'copy',
+            'cdnify',
+            'usemin',
+            'ngmin',
+            'uglify'
     ]);
 
     grunt.registerTask('default', ['build']);
