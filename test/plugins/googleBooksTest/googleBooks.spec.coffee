@@ -61,7 +61,7 @@ describe 'googleBooks', ()->
 
     describe 'raiseHand', () ->
         it 'should raise his hand', () ->
-            cb = jasmine.createSpy()
+            cb = jasmine.createSpy('this is the callback of raiseHand')
             cb.andCallFake (data)->
                 return
             gb.raiseHand(uri,cb)

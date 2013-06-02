@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         yeoman: yeomanConfig,
         watch: {
             test: {
-                files: ['<%= yeoman.app %>/lib/**/*.coffee', 'test/**/*.coffee'],
+                files: ['<%= yeoman.app %>/lib/**/*.coffee', 'test/**/*.coffee', 'lib/**/*.js'],
                 tasks: ['coffee', 'jasmine-node:livetest']
             },
             // teest: {

@@ -10,6 +10,11 @@
 	"itunes": {
 		"path": "./plugins/itunes/itunes.js",
 		"options": {}
+	},
+	"ebay": {
+		"path": "./plugins/ebay/ebay.js",
+		"options": {}
 	}
+
 
 }
