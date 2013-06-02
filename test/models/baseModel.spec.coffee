@@ -11,7 +11,6 @@ m.factory 'db', db
 m.factory 'baseModel', require '../../lib/models/baseModel' 
 
 
-makeBaseModel = require '../../lib/models/baseModel' 
 Q = require 'q'
 baseModel = null
 fix = null
@@ -45,7 +44,6 @@ describe 'baseModel', () ->
             fix = fixtures.load(__dirname + '/fixtures/');
             # console.log fix
             fixtures.save fix, dbInstance, () ->
-                
                 done()
 
         # .fail (err) -> console.log 'errore:', err.stack; 
@@ -116,6 +114,21 @@ describe 'baseModel', () ->
                 count++
             promise.then (data) ->
                 expect(count).toBe(data.length)
+                done()
+
+        it 'should allow filtering', (done) ->
+            filter =
+                value:
+                    $gt: 1 
+            baseModel._getAll('useless', filter).then (result) ->
+                expect(result.length).toBe(3)
+                done()
+        it 'should allow to set limit', (done) ->
+            filter =
+                value:
+                    $gt: 1 
+            baseModel._getAll('useless', filter, 2).then (result) ->
+                expect(result.length).toBe(2)
                 done()
 
     describe '_insert', () ->
