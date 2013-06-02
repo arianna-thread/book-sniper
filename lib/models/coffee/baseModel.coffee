@@ -74,15 +74,6 @@ module.exports = (db) ->
         deferred.promise
 
 
-
-
-    #   catch e
-    #     db.close()
-    #     deferred.reject e
-      
-    #   # deferred.resolve([{}, {}, {}, {}]);
-    #   deferred.promise
-
     _insert: (collectionName, items) ->
         deferred = Q.defer()
         if Array.isArray items 
@@ -105,8 +96,39 @@ module.exports = (db) ->
         deferred.promise
 
 
+    _replace: (collectionName, item) ->
+        db.getConnection().then (dbInstance) ->
+            deferred = Q.defer()
+            dbInstance.collection collectionName, (err, collection) ->
+                if err
+                    deferred.reject err
+                    return
+                collection.save item, (err, result) ->
+                    if err
+                        deferred.reject err
+                        return
+                    deferred.resolve result
+            deferred.promise
+                   
 
-    #   deferred.promise
+    _update: (collectionName, query, update, multi = false) ->
+        deferred = Q.defer()
+        db.getConnection()
+        .then (dbInstance) ->
+            dbInstance.collection collectionName, (err, collection) ->
+                if err
+                    deferred.reject err
+                    return
+                collection.update query, update,
+                    multi: multi
+                , (err, result) ->
+                    if err
+                        deferred.reject err
+                        return   
+                    deferred.resolve result 
+        .fail (err) ->
+            deferred.reject (err)
+        deferred.promise
 
     # _bulkUpdate: (collectionName, query, update) ->
     #   deferred = Q.defer()
@@ -131,26 +153,7 @@ module.exports = (db) ->
 
 
 
-    #   deferred.promise
 
-    # _update: (item, collectionName) ->
-    #   deferred = Q.defer()
-    #   db.open (err, db) ->
-    #     if err
-    #       db.close()
-    #       deferred.reject err
-    #       return
-    #     db.collection collectionName, (err, collection) ->
-    #       if err
-    #         db.close()
-    #         deferred.reject err
-    #         return
-    #       collection.save item, (err, result) ->
-    #         if err
-    #           db.close()
-    #           deferred.reject err
-    #           return
-    #         deferred.resolve result
 
 
 
