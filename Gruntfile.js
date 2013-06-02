@@ -15,7 +15,7 @@ module.exports = function (grunt) {
         watch: {
             test: {
                 files: ['<%= yeoman.app %>/lib/**/*.coffee','test/**/*.coffee'],
-                tasks: ['coffee', 'jasmine-node']
+                tasks: ['coffee', 'jasmine-node:livetest']
             },
             // teest: {
             //     files: ['test/spec/{,*/}*.coffee'],
@@ -46,12 +46,25 @@ module.exports = function (grunt) {
             all: ['test/plugins/{,*/}*Test.js']
         },
         'jasmine-node': {
-            options: {
-                coffee: true
+            livetest: {
+                options: {
+                    coffee: true,
+                    verbose:true,
+                    captureExceptions:true,
+                    forceexit: true,
+                    forceReturnTrue: true
+                },
+                src: ['test/models/**.coffee'],
             },
-            run: {
-                spec: ['test/models/']
-            },
+            travis: {
+                options: {
+                    coffee: true,
+                    verbose:true,
+                    captureExceptions:true,
+                    forceexit: true,
+                },
+                src: ['test/models/**.coffee'],
+            }
 
             // env: {
             //     NODE_PATH: 'lib/js'
@@ -72,7 +85,7 @@ module.exports = function (grunt) {
         'coffee',
         // 'compass',
         // 'connect:test',
-        'jasmine-node'
+        'jasmine-node:travis'
     ]);
 
     grunt.registerTask('build', [
