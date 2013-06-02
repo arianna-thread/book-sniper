@@ -4,9 +4,7 @@ pluginError = '../../../lib/errors/pluginError'
 isbn = '9782709638821'
 uri = 'http://books.google.fr/books?id=swsZuHxsJDwC&printsec=frontcover&dq=isbn:9782709638821&hl=&cd=1&source=gbs_api'
 uri1 = 'http://books.google.fr/books/about/Steve_Jobs.html?hl=&id=swsZuHxsJDwC'
-foo
-    cb = (data) ->
-    return
+
 
 
 
@@ -63,6 +61,18 @@ describe 'googleBooks', ()->
 
     describe 'raiseHand', () ->
         it 'should raise his hand', () ->
+            cb = jasmine.createSpy()
+            cb.andCallFake (data)->
+                return
+            gb.raiseHand(uri,cb)
+            expect(cb).toHaveBeenCalled()
+
+        it 'should not raise his hand', () ->
+            cb = jasmine.createSpy()
+            cb.andCallFake (data)->
+                return
+            gb.raiseHand('fooobar',cb)
+            expect(cb).not.toHaveBeenCalled()
             
 
 
