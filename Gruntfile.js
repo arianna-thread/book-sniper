@@ -66,7 +66,7 @@ module.exports = function(grunt) {
                     forceexit: true,
                     forceReturnTrue: true
                 },
-                src: ['test/plugins/**/*.coffee'],
+                src: ['test/**/*.coffee'],
             },
             travis: {
                 options: {

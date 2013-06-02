@@ -45,7 +45,6 @@ describe 'baseModel', () ->
             fix = fixtures.load(__dirname + '/fixtures/');
             # console.log fix
             fixtures.save fix, dbInstance, () ->
-                
                 done()
 
         # .fail (err) -> console.log 'errore:', err.stack; 
