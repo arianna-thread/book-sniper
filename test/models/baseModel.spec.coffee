@@ -1,8 +1,14 @@
+di = require 'di'
+m = new di.Module()
 config = 
     dbName: 'book-sniper-test'
     dbHost: '127.0.0.1'
     dbPort: 27017
 db = require '../../lib/models/db'
+injector = null
+m.value 'config', config
+m.factory 'db', db
+m.factory 'baseModel', require '../../lib/models/baseModel' 
 
 
 makeBaseModel = require '../../lib/models/baseModel' 
@@ -29,15 +35,17 @@ describe 'baseModel', () ->
                      "Expected #{actual}#{notText} to be a Q promise"
 
                 Q.isPromise actual
-
-        db(config).getConnection().then (dbI) ->
+        injector = new di.Injector [m];
+        db = injector.get 'db';
+        baseModel = injector.get 'baseModel'
+        db.getConnection().then (dbI) ->
             dbInstance = dbI
             # console.log dbInstance
             fixtures = require 'mongodb-fixtures'
             fix = fixtures.load(__dirname + '/fixtures/');
             # console.log fix
             fixtures.save fix, dbInstance, () ->
-                baseModel = makeBaseModel db(config)
+                
                 done()
 
         # .fail (err) -> console.log 'errore:', err.stack; 
@@ -52,9 +60,16 @@ describe 'baseModel', () ->
     it 'should expose a _getAll method', () ->
         expect(baseModel._getAll).toBeDefined()
         expect(typeof baseModel._getAll).toBe 'function'
-     it 'should expose a _insert method', () ->
+    it 'should expose a _insert method', () ->
         expect(baseModel._insert).toBeDefined()
-        expect(typeof baseModel._insert).toBe 'function'    
+        expect(typeof baseModel._insert).toBe 'function'
+    it 'should expose a _replace method', () ->
+        expect(baseModel._replace).toBeDefined()
+        expect(typeof baseModel._replace).toBe 'function'  
+    it 'should expose a _update method', () ->
+        expect(baseModel._update).toBeDefined()
+        expect(typeof baseModel._update).toBe 'function'    
+
     describe '_getById', () ->
         it 'should fetch elements by id', (done) ->
             baseModel._getById( 'useless', fix.useless[0]._id.toString()).then (elem) ->
@@ -124,7 +139,7 @@ describe 'baseModel', () ->
                 console.error(err)
                 done()
         
-        it 'should call beforeInsert on each element', (done)->
+        it 'should call beforeInsert on the item', (done)->
             x = 
                 name: 'an  item'
                 value: 'a new value'
@@ -140,5 +155,97 @@ describe 'baseModel', () ->
                 expect(false).toBe(true)
                 done()
                 return 
+
+        it 'should add multiple items if an array is passed', (done) ->
+            toInsert = [{
+                name: 'first'
+                value: 'first value'
+            },{
+                name: 'second'
+                value: 'second value'
+            }]
+
+            baseModel._insert('useless', toInsert).then () ->
+                baseModel._getAll('useless')
+            .then (elements) ->
+                l = elements.length
+                expect(elements[l-1].name).toBe toInsert[1].name
+                expect(elements[l-2].name).toBe toInsert[0].name
+                done()
+            .fail (err) ->
+                console.error err
+                expect(false).toBe true
+                done()
+
+        it 'should call beforeInsert on each item if an array is passed', (done)->
+            toInsert = [{
+                name: 'first'
+                value: 'first value'
+            },{
+                name: 'second'
+                value: 'second value'
+            }]
+            
+            
+            spyOn( baseModel,'beforeInsert').andCallThrough()
+
+            baseModel._insert('useless', toInsert).then () ->
+                expect(baseModel.beforeInsert).toHaveBeenCalled()
+                expect(baseModel.beforeInsert.callCount).toBe 2
+                done()
+            .fail (err) ->
+                console.error('exceptions:', err)
+                expect(false).toBe(true)
+                done()
+                return
+    describe '_replace', () ->
+
+        
+        it 'should return a promise', () ->
+            expect(baseModel._replace()).toBeAPromise()
+        it 'should update the passed-in object', (done) ->
+            item = fix.useless[0]
+            item.value = 'brand new value'
+            baseModel._replace('useless', item).then (updateCount) ->
+                expect(updateCount).toBe 1
+                baseModel._getById 'useless', item._id.toString()
+            .then (fetchedItem) ->
+                expect(fetchedItem.value).toBe 'brand new value'
+                done()
+            .fail (err) ->
+                console.error('exceptions:', err)
+                expect(false).toBe(true)
+                done()
+
+    describe '_update', () -> 
+
+        it 'should return a promise', () ->
+            expect(baseModel._update()).toBeAPromise()
+        
+        it 'should perform the update operation specified on a single item', (done) ->
+            update = 
+                $set: 
+                    name: 'newFirst'
+            baseModel._update('useless', {}, update).then (updateCount) ->
+                expect(updateCount).toBe 1
+                baseModel._getAll('useless')
+            .then (elements) ->
+                expect(elements[0].name).toBe 'newFirst'
+                done()
+
+        it 'should perform the update on all the selected objects if multi param is true', (done) ->
+            update = 
+                $set: 
+                    name: 'newFirst'
+            baseModel._update('useless', {}, update, true).then (updateCount) ->
+                expect(updateCount).toBe fix.useless.length
+                baseModel._getAll('useless')
+            .then (elements) ->
+                expect(element.name).toBe 'newFirst' for element in elements
+                done()
+            .fail (err) ->
+                console.error err
+                expect(false).toBe true
+                done()
 
 
