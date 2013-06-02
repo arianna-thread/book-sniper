@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             test: {
-                files: ['<%= yeoman.app %>/lib/**/*.coffee','test/**/*.coffee'],
+                files: ['<%= yeoman.app %>/lib/**/*.coffee', 'test/**/*.coffee'],
                 tasks: ['coffee', 'jasmine-node:livetest']
             },
             // teest: {
@@ -55,24 +55,25 @@ module.exports = function (grunt) {
             all: ['test/plugins/{,*/}*Test.js']
         },
         'jasmine-node': {
+
             livetest: {
                 options: {
                     coffee: true,
-                    verbose:true,
-                    captureExceptions:true,
+                    verbose: true,
+                    captureExceptions: true,
                     forceexit: true,
                     forceReturnTrue: true
                 },
-                src: ['test/models/**.coffee'],
+                src: ['test/**/*.coffee'],
             },
             travis: {
                 options: {
                     coffee: true,
-                    verbose:true,
-                    captureExceptions:true,
+                    verbose: true,
+                    captureExceptions: true,
                     forceexit: true,
                 },
-                src: ['test/models/**.coffee'],
+                src: ['test/**/*.coffee'],
             }
 
             // env: {

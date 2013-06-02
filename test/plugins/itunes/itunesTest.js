@@ -4,7 +4,7 @@ var invaliditunesLookup = 'https://itunes.apple.com/us/book/steve-jobs/id4316asd
 
 
 exports['getByURI'] = function(test) {
-    
+
     test.expect(1);
     itunesPlugin.getByURI(itunesLookup).then(function(data) {
         test.equal(data.price, 16.99);

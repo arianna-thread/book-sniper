@@ -3,7 +3,7 @@ exports['factory'] = function(message, err) {
     var errorConf = {
         invalidISBN: 0,
         invalidURI: 1,
-        notAvaiable: 3
+        notAvaiable: 2
     },
         error;
 
@@ -11,7 +11,7 @@ exports['factory'] = function(message, err) {
 
         error = {
             message: 'Unhandled error',
-            code: 5,
+            code: 4,
             error: null
         };
 
@@ -29,6 +29,5 @@ exports['factory'] = function(message, err) {
         }
 
     }
-    console.log(JSON.stringify(error));
     return error;
 };

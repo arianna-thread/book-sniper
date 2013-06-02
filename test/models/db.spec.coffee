@@ -64,6 +64,3 @@ describe 'db', () ->
                 expect(1).toBe 0
                 done()
                  
-
-
-
