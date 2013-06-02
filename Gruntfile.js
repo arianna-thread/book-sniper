@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         watch: {
             test: {
-                files: ['<%= yeoman.app %>/lib/**/*.coffee','test/**/*.coffee'],
+                files: ['<%= yeoman.app %>/lib/**/*.*', 'test/**/*.coffee'],
                 tasks: ['coffee', 'jasmine-node']
             },
             // teest: {
@@ -34,23 +34,26 @@ module.exports = function (grunt) {
         coffee: {
             models: {
                 files: [{
-                    expand: true,
-                    cwd: 'lib/models/coffee',
-                    src: '*.coffee',
-                    dest: 'lib/models/',
-                    ext: '.js',
-                }]
-            },
+                        expand: true,
+                        cwd: 'lib/models/coffee',
+                        src: '*.coffee',
+                        dest: 'lib/models/',
+                        ext: '.js',
+                    }
+                ]
+            }
         },
         nodeunit: {
             all: ['test/plugins/{,*/}*Test.js']
         },
         'jasmine-node': {
             options: {
-                coffee: true
+                coffee: true,
+                captureException: true,
+                verbose: true
             },
             run: {
-                spec: ['test/models/']
+                spec: ['test/']
             },
 
             // env: {
@@ -63,7 +66,7 @@ module.exports = function (grunt) {
     // remove when mincss task is renamed
 
     grunt.registerTask('livetest', [
-        'watch'
+            'watch'
     ]);
 
 
@@ -76,21 +79,21 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean:dist',
-        'jshint',
-        'test',
-        'coffee',
-        'compass:dist',
-        'useminPrepare',
-        'imagemin',
-        'cssmin',
-        'htmlmin',
-        'concat',
-        'copy',
-        'cdnify',
-        'usemin',
-        'ngmin',
-        'uglify'
+            'clean:dist',
+            'jshint',
+            'test',
+            'coffee',
+            'compass:dist',
+            'useminPrepare',
+            'imagemin',
+            'cssmin',
+            'htmlmin',
+            'concat',
+            'copy',
+            'cdnify',
+            'usemin',
+            'ngmin',
+            'uglify'
     ]);
 
     grunt.registerTask('default', ['build']);
