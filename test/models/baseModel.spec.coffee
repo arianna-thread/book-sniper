@@ -73,6 +73,10 @@ describe 'baseModel', () ->
             baseModel._getById( 'useless', fix.useless[0]._id.toString()).then (elem) ->
                 expect(elem.name).toBe(fix.useless[0].name)
                 done()
+            .fail (err) ->
+                console.log 'err:', err
+                expect(false).toBe true
+                done()
         
         it 'should reject the promise if the id is bad', (done) ->
             baseModel._getById( 'useless', 'A BAD ID').then (elem) ->

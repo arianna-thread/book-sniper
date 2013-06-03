@@ -1,5 +1,5 @@
 Q = require 'q'
-booksFactory = (baseModel) ->
+booksFactory = (baseModel, errors) ->
     books = Object.create(baseModel)
     books.getAll = (filter = {}, limit) ->
         @_getAll('books', filter, limit)
@@ -10,22 +10,28 @@ booksFactory = (baseModel) ->
             'refs.uri': uri
         @getAll(filter).then (books) ->
             if books.length > 1
-                throw  "Consistency error, multiple objects found with same uri: #{books}"
+                throw  errors.CONSISTENCY_ERROR_URI
             if books.length is 1
                 return books[0]
             return null
 
     books.getByISBN = (ISBN) ->
         if (typeof ISBN) isnt 'string' or ISBN.length isnt 13
-            return Q.reject 'ISBN must be a 13-characters string'
+            return Q.reject errors.INVALID_ISBN
         filter =
             isbn: ISBN
         @getAll(filter).then (books) ->
             if books.length > 1
-                throw  "Consistency error, multiple objects found with same ISBN: #{books}"
+                throw  errors.CONSISTENCY_ERROR_ISBN
             if books.length is 1
                 return books[0]
             return null
+
+    books.create = (book) ->
+        ISBN = book?.isbn
+        if (typeof ISBN) isnt 'string' or ISBN.length isnt 13
+            return Q.reject errors.INVALID_ISBN
+        @_insert 'books', book
 
     return books
 

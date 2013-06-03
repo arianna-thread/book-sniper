@@ -29,7 +29,7 @@ module.exports = ->
         deferred.resolve cacheGet[collectionName].shift()
         deferred.promise
 
-    _insert: (items, collectionName) ->
+    _insert: (collectionName, items) ->
         deferred = Q.defer()
         throw "Unexpected insert on collection " + collectionName + " items: " + JSON.stringify(items)  if not cacheInsert[collectionName] or cacheInsert[collectionName].length <= 0
         deferred.resolve cacheInsert[collectionName].shift()

@@ -6,9 +6,12 @@ config =
     dbHost: '127.0.0.1'
     dbPort: 27017
 db = require '../../lib/models/db'
+
 injector = null
 books = null
 baseModelMock = null
+errors = null
+m.value 'errors', require '../../lib/models/errors'
 m.value 'config', config
 m.factory 'db', db
 m.factory 'baseModel', require './mocks/baseModel'
@@ -38,7 +41,8 @@ describe 'books module', () ->
         injector = new di.Injector [m];
         books = injector.get 'books'
         baseModelMock = injector.get 'baseModel'
-
+        errors = injector.get 'errors'
+    
     it 'should be defined', () ->
         expect(books).toBeDefined()
 
@@ -54,6 +58,10 @@ describe 'books module', () ->
     it 'should expose a getByISBN method', () ->
         expect(books.getByISBN).toBeDefined()
         expect(typeof books.getByISBN).toBe 'function'
+
+    it 'should expose a create method', () ->
+        expect(books.create).toBeDefined()
+        expect(typeof books.create).toBe 'function'
     
     describe 'getAll method', () ->
         beforeEach () ->
@@ -74,7 +82,7 @@ describe 'books module', () ->
             baseModelMock.expectGet 'books', {}
             expect(books.getByUri('A URI')).toBeAPromise()
 
-        it 'should resolve to a single object if uri exists', (done) ->
+        it 'should resolve to a single book if uri exists', (done) ->
             retObj = {}
             baseModelMock.expectGet 'books', [retObj]
             spyOn(baseModelMock, '_getAll').andCallThrough()
@@ -108,7 +116,7 @@ describe 'books module', () ->
                 expect(failure).toHaveBeenCalledWith('Expected undefined to be a string')
                 done()
 
-        it 'should reject the promise if more than 1 object is found', (done) ->
+        it 'should reject the promise if more than 1 book is found', (done) ->
             retObj = {}
             baseModelMock.expectGet 'books', [retObj,retObj]
             success = jasmine.createSpy()
@@ -116,11 +124,11 @@ describe 'books module', () ->
             books.getByUri('DUMMY_URI').then(success, failure)
             .finally () ->
                 expect(success).not.toHaveBeenCalled()
-                expect(failure).toHaveBeenCalledWith("Consistency error, multiple objects found with same uri: [object Object],[object Object]")
+                expect(failure).toHaveBeenCalledWith(errors.CONSISTENCY_ERROR_URI)
                 done()
 
         
-    describe 'getByISBN', () ->
+    describe 'getByISBN method', () ->
         validISBN13 = '9780385537858'
         it 'should return a promise', () ->
             baseModelMock.expectGet 'books', {}
@@ -157,10 +165,10 @@ describe 'books module', () ->
             books.getByISBN().then(success, failure)
             .finally () ->
                 expect(success).not.toHaveBeenCalled()
-                expect(failure).toHaveBeenCalledWith('ISBN must be a 13-characters string')
+                expect(failure).toHaveBeenCalledWith(errors.INVALID_ISBN)
                 done()
 
-        it 'should reject the promise if more than 1 object is found', (done) ->
+        it 'should reject the promise if more than 1 book is found', (done) ->
             retObj = {}
             baseModelMock.expectGet 'books', [retObj,retObj]
             success = jasmine.createSpy()
@@ -168,8 +176,22 @@ describe 'books module', () ->
             books.getByISBN(validISBN13).then(success, failure)
             .finally () ->
                 expect(success).not.toHaveBeenCalled()
-                expect(failure).toHaveBeenCalledWith("Consistency error, multiple objects found with same ISBN: [object Object],[object Object]")
+                expect(failure).toHaveBeenCalledWith(errors.CONSISTENCY_ERROR_ISBN)
                 done()   
 
+    describe 'create method', () ->
+        validISBN13 = '9780385537858'
+        it 'should return a promise', ()->
+            baseModelMock.expectInsert 'books', {}
+            expect(books.create(validISBN13)).toBeAPromise()
+
+        it 'should reject the promise if the book doesn\'t have a valid ISBN', ()->
+            success = jasmine.createSpy()
+            failure = jasmine.createSpy()
+            books.create('INVALID ISBN').then(success, failure)
+            .finally () ->
+                expect(success).not.toHaveBeenCalled()
+                expect(failure).toHaveBeenCalledWith(errors.INVALID_ISBN)
+                done()
 
 
