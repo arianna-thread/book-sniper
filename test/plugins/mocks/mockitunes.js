@@ -39,7 +39,6 @@ exports['getByURI'] = function(uri) {
     });
 
     if (booksSelected.length > 0) {
-        console.log(booksSelected[0]);
         defer.resolve(booksSelected[0]);
     } else {
         defer.reject(errors.factory('invalidURI'));
@@ -64,7 +63,6 @@ exports['getByISBN'] = function(isbn) {
 
 exports['raiseHand'] = function(uri, cb) {
     if (uri.match('https://itunes.apple')) {
-        console.log('mockItunes raised his hand');
         cb(true, 'mockItunes');
     } else {
         cb(false);

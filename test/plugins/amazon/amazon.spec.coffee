@@ -1,23 +1,21 @@
-gb = require '../../../lib/pluginManager/plugins/googleBooks/googleBooks.js'
+amazon = require '../../../lib/pluginManager/plugins/amazon/amazon.js'
 Q = require 'q'
 pluginError = '../../errors/pluginError'
 isbn = '9782709638821'
-uri = 'http://books.google.fr/books?id=swsZuHxsJDwC&printsec=frontcover&dq=isbn:9782709638821&hl=&cd=1&source=gbs_api'
-uri1 = 'http://books.google.fr/books/about/Steve_Jobs.html?hl=&id=swsZuHxsJDwC'
+uri = 'http://www.amazon.com/gp/product/1579654924/ref=s9_al_bw_g14_ir04?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-3&pf_rd_r=189D4777EEA342BC85AF&pf_rd_t=101&pf_rd_p=1546559002&pf_rd_i=390919011'
 
-describe 'googleBooks', ()->
+describe 'amazon', ()->
 
     it 'should be defined', () ->
-        expect(gb).toBeDefined()
+        expect(amazon).toBeDefined()
 
     describe 'getByUri',() ->
         it 'should return a promise with diffent uris', (done) ->
-            expect(Q.isPromise(gb.getByURI(uri))).toBe(true)
-            expect(Q.isPromise(gb.getByURI(uri1))).toBe(true)
+            expect(Q.isPromise(amazon.getByURI(uri))).toBe(true)
             done()
         # it 'should retrieve the right book', (done) ->
-        #     gb.getByURI(uri).then (dataURI) ->
-        #         gb.getByISBN(dataURI.isbn).then (dataISBN) ->
+        #     amazon.getByURI(uri).then (dataURI) ->
+        #         amazon.getByISBN(dataURI.isbn).then (dataISBN) ->
                  
         #             expect(dataURI).toEqual(dataISBN)
         #             done()
@@ -28,7 +26,7 @@ describe 'googleBooks', ()->
         #         expect(1).toBe(2)
         #         done()
         it 'should return invalidURI if invalid uri is given', (done) ->
-            gb.getByURI('foobar').then (data) ->
+            amazon.getByURI('foobar').then (data) ->
                 expect(1).not.toBe(1)
                 done() 
             .fail (data) ->
@@ -38,11 +36,11 @@ describe 'googleBooks', ()->
 
     describe 'GetByISBN',() ->
         it 'should return a promise', (done) ->
-            expect(Q.isPromise(gb.getByISBN(isbn))).toBe(true)
+            expect(Q.isPromise(amazon.getByISBN(isbn))).toBe(true)
             done()
         # it 'should retrieve the right book', (done) ->
-        #     gb.getByISBN(isbn).then (dataISBN) ->
-        #         gb.getByURI(dataISBN.uri).then (dataURI) ->
+        #     amazon.getByISBN(isbn).then (dataISBN) ->
+        #         amazon.getByURI(dataISBN.uri).then (dataURI) ->
         #             # dataURI.key.forEach (e)->
         #             #     expect(dataURI[e]).toBe(dataISBN[e])
         #             expect(dataURI).toEqual(dataISBN)
@@ -55,7 +53,7 @@ describe 'googleBooks', ()->
         #         expect(1).toBe(2)
         #         done()
         it 'should return invalidISBN if invalid isbn is given', (done) ->
-            gb.getByISBN('foobar').then (data) ->
+            amazon.getByISBN('foobar').then (data) ->
                 expect(1).not.toBe(1)
                 done()
             .fail (data) ->
@@ -66,11 +64,12 @@ describe 'googleBooks', ()->
         it 'should raise his hand if it is called', () ->
             cb = jasmine.createSpy('this is the callback of raiseHand')
             cb.andCallFake (boolean,data)->
-            gb.raiseHand(uri,cb)
-            expect(cb).toHaveBeenCalledWith(true,'googleBooks')
+
+            amazon.raiseHand(uri,cb)
+            expect(cb).toHaveBeenCalledWith(true,'amazon')
 
         it 'should not raise his hand if it isn t called', () ->
             cb = jasmine.createSpy('this is the callback of raiseHand')
             cb.andCallFake (boolean,data)->
-            gb.raiseHand('foobar',cb)
+            amazon.raiseHand('foobar',cb)
             expect(cb).toHaveBeenCalledWith(false)
