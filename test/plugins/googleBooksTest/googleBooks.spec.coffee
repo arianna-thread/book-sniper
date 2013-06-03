@@ -18,11 +18,8 @@ describe 'googleBooks', ()->
         # it 'should retrieve the right book', (done) ->
         #     gb.getByURI(uri).then (dataURI) ->
         #         gb.getByISBN(dataURI.isbn).then (dataISBN) ->
-                    
-        #             # dataURI.key.forEach (e)->
-        #             #     expect(dataURI[e]).toBe(dataISBN[e])
+                 
         #             expect(dataURI).toEqual(dataISBN)
-        #             # expect(1).toBe(2)
         #             done()
         #         .fail (data) ->
         #             expect(1).toBe(2)

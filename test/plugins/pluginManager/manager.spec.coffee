@@ -91,7 +91,6 @@ describe 'manager', ()->
             manager.getItems(itunesBook).then (data) ->
                 equal = true
                 i = 0
-                console.log(data);
 
                 while i < data.length - 1
                     equal = false  if data[i].isbn isnt data[i + 1].isbn
