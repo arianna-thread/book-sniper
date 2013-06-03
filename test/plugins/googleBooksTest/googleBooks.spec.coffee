@@ -17,7 +17,8 @@ describe 'googleBooks', ()->
             done()
         # it 'should retrieve the right book', (done) ->
         #     gb.getByURI(uri).then (dataURI) ->
-        #         gb.getByISBN(isbn).then (dataISBN) ->
+        #         gb.getByISBN(dataURI.isbn).then (dataISBN) ->
+                    
         #             # dataURI.key.forEach (e)->
         #             #     expect(dataURI[e]).toBe(dataISBN[e])
         #             expect(dataURI).toEqual(dataISBN)
@@ -29,7 +30,7 @@ describe 'googleBooks', ()->
         #     .fail (data) ->
         #         expect(1).toBe(2)
         #         done()
-        it 'should return invalidURI', (done) ->
+        it 'should return invalidURI if invalid uri is given', (done) ->
             gb.getByURI('foobar').then (data) ->
                 expect(1).not.toBe(1)
                 done() 
@@ -43,8 +44,8 @@ describe 'googleBooks', ()->
             expect(Q.isPromise(gb.getByISBN(isbn))).toBe(true)
             done()
         # it 'should retrieve the right book', (done) ->
-        #     gb.getByISBN(isbn).then (dataURI) ->
-        #         gb.getByURI(uri).then (dataISBN) ->
+        #     gb.getByISBN(isbn).then (dataISBN) ->
+        #         gb.getByURI(dataISBN.uri).then (dataURI) ->
         #             # dataURI.key.forEach (e)->
         #             #     expect(dataURI[e]).toBe(dataISBN[e])
         #             expect(dataURI).toEqual(dataISBN)
@@ -56,7 +57,7 @@ describe 'googleBooks', ()->
         #     .fail (data) ->
         #         expect(1).toBe(2)
         #         done()
-        it 'should return invalidISBN', (done) ->
+        it 'should return invalidISBN if invalid isbn is given', (done) ->
             gb.getByISBN('foobar').then (data) ->
                 expect(1).not.toBe(1)
                 done()
@@ -65,16 +66,14 @@ describe 'googleBooks', ()->
                 done()    
 
     describe 'raiseHand', () ->
-        it 'should raise his hand', () ->
+        it 'should raise his hand if it is called', () ->
             cb = jasmine.createSpy('this is the callback of raiseHand')
-            cb.andCallFake (data)->
-                return
+            cb.andCallFake (boolean,data)->
             gb.raiseHand(uri,cb)
-            expect(cb).toHaveBeenCalled()
+            expect(cb).toHaveBeenCalledWith(true,'googleBooks')
 
-        it 'should not raise his hand', () ->
-            cb = jasmine.createSpy()
-            cb.andCallFake (data)->
-                return
-            gb.raiseHand('fooobar',cb)
-            expect(cb).not.toHaveBeenCalled()
+        it 'should not raise his hand if it isn t called', () ->
+            cb = jasmine.createSpy('this is the callback of raiseHand')
+            cb.andCallFake (boolean,data)->
+            gb.raiseHand('foobar',cb)
+            expect(cb).toHaveBeenCalledWith(false)
