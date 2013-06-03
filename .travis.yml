@@ -4,5 +4,9 @@ node_js:
     - "0.8"
 services:
     - mongodb
+notifications:
+  email:
+    on_success: always # change
+    on_failure: always # default: always
 before_script:
     - npm install -g grunt-cli jasmine-node
