@@ -45,7 +45,7 @@
         deferred.resolve(cacheGet[collectionName].shift());
         return deferred.promise;
       },
-      _insert: function(items, collectionName) {
+      _insert: function(collectionName, items) {
         var deferred;
         deferred = Q.defer();
         if (!cacheInsert[collectionName] || cacheInsert[collectionName].length <= 0) {
