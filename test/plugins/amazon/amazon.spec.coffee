@@ -10,9 +10,9 @@ describe 'amazon', ()->
         expect(amazon).toBeDefined()
 
     describe 'getByUri',() ->
-        it 'should return a promise with diffent uris', (done) ->
-            expect(Q.isPromise(amazon.getByURI(uri))).toBe(true)
-            done()
+        # it 'should return a promise', (done) ->
+        #     expect(Q.isPromise(amazon.getByURI(uri))).toBe(true)
+        #     done()
         # it 'should retrieve the right book', (done) ->
         #     amazon.getByURI(uri).then (dataURI) ->
         #         amazon.getByISBN(dataURI.isbn).then (dataISBN) ->
@@ -25,19 +25,19 @@ describe 'amazon', ()->
         #     .fail (data) ->
         #         expect(1).toBe(2)
         #         done()
-        it 'should return invalidURI if invalid uri is given', (done) ->
-            amazon.getByURI('foobar').then (data) ->
-                expect(1).not.toBe(1)
-                done() 
-            .fail (data) ->
-                expect(data.code).toBe(1)
-                done()
+        # it 'should return invalidURI if invalid uri is given', (done) ->
+        #     amazon.getByURI('foobar').then (data) ->
+        #         expect(1).not.toBe(1)
+        #         done() 
+        #     .fail (data) ->
+        #         expect(data.code).toBe(1)
+        #         done()
 
 
     describe 'GetByISBN',() ->
-        it 'should return a promise', (done) ->
-            expect(Q.isPromise(amazon.getByISBN(isbn))).toBe(true)
-            done()
+        # it 'should return a promise', (done) ->
+        #     expect(Q.isPromise(amazon.getByISBN(isbn))).toBe(true)
+        #     done()
         # it 'should retrieve the right book', (done) ->
         #     amazon.getByISBN(isbn).then (dataISBN) ->
         #         amazon.getByURI(dataISBN.uri).then (dataURI) ->
@@ -52,13 +52,13 @@ describe 'amazon', ()->
         #     .fail (data) ->
         #         expect(1).toBe(2)
         #         done()
-        it 'should return invalidISBN if invalid isbn is given', (done) ->
-            amazon.getByISBN('foobar').then (data) ->
-                expect(1).not.toBe(1)
-                done()
-            .fail (data) ->
-                expect(data.code).toBe(0)
-                done()    
+        # it 'should return invalidISBN if invalid isbn is given', (done) ->
+        #     amazon.getByISBN('foobar').then (data) ->
+        #         expect(1).not.toBe(1)
+        #         done()
+        #     .fail (data) ->
+        #         expect(data.code).toBe(0)
+        #         done()    
 
     describe 'raiseHand', () ->
         it 'should raise his hand if it is called', () ->
