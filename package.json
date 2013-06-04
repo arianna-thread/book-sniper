@@ -5,7 +5,7 @@
     "express": "3.0.5",
     "jade": "*",
     "q": "*",
-    "restler": "*",
+    "restler": "git://github.com/eric-wieser/restler.git",
     "mongodb": "~1.3.7",
     "apac": "0.0.11",
     "di": "0.0.1"
