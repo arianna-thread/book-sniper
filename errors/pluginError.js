@@ -3,7 +3,7 @@ exports['factory'] = function(message, err) {
     var errorConf = {
         invalidISBN: 0,
         invalidURI: 1,
-        notAvaiable: 2
+        notAvailable: 2
     },
         error;
 
