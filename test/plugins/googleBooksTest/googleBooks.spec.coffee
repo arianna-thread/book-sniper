@@ -15,18 +15,18 @@ describe 'googleBooks', ()->
             expect(Q.isPromise(gb.getByURI(uri))).toBe(true)
             expect(Q.isPromise(gb.getByURI(uri1))).toBe(true)
             done()
-        # it 'should retrieve the right book', (done) ->
-        #     gb.getByURI(uri).then (dataURI) ->
-        #         gb.getByISBN(dataURI.isbn).then (dataISBN) ->
+        it 'should retrieve the right book', (done) ->
+            gb.getByURI(uri).then (dataURI) ->
+                gb.getByISBN(dataURI.isbn).then (dataISBN) ->
                  
-        #             expect(dataURI).toEqual(dataISBN)
-        #             done()
-        #         .fail (data) ->
-        #             expect(1).toBe(2)
-        #             done()
-        #     .fail (data) ->
-        #         expect(1).toBe(2)
-        #         done()
+                    expect(dataURI).toEqual(dataISBN)
+                    done()
+                .fail (data) ->
+                    expect(1).toBe(2)
+                    done()
+            .fail (data) ->
+                expect(1).toBe(2)
+                done()
         it 'should return invalidURI if invalid uri is given', (done) ->
             gb.getByURI('foobar').then (data) ->
                 expect(1).not.toBe(1)
@@ -40,20 +40,20 @@ describe 'googleBooks', ()->
         it 'should return a promise', (done) ->
             expect(Q.isPromise(gb.getByISBN(isbn))).toBe(true)
             done()
-        # it 'should retrieve the right book', (done) ->
-        #     gb.getByISBN(isbn).then (dataISBN) ->
-        #         gb.getByURI(dataISBN.uri).then (dataURI) ->
-        #             # dataURI.key.forEach (e)->
-        #             #     expect(dataURI[e]).toBe(dataISBN[e])
-        #             expect(dataURI).toEqual(dataISBN)
-        #             # expect(1).toBe(2)
-        #             done()
-        #         .fail (data) ->
-        #             expect(1).toBe(2)
-        #             done()
-        #     .fail (data) ->
-        #         expect(1).toBe(2)
-        #         done()
+        it 'should retrieve the right book', (done) ->
+            gb.getByISBN(isbn).then (dataISBN) ->
+                gb.getByURI(dataISBN.uri).then (dataURI) ->
+                    # dataURI.key.forEach (e)->
+                    #     expect(dataURI[e]).toBe(dataISBN[e])
+                    expect(dataURI).toEqual(dataISBN)
+                    # expect(1).toBe(2)
+                    done()
+                .fail (data) ->
+                    expect(1).toBe(2)
+                    done()
+            .fail (data) ->
+                expect(1).toBe(2)
+                done()
         it 'should return invalidISBN if invalid isbn is given', (done) ->
             gb.getByISBN('foobar').then (data) ->
                 expect(1).not.toBe(1)

@@ -37,17 +37,17 @@ describe 'itunesPlugin', ()->
         # it 'should retrieve the right book (same title)', (done) ->
         #     itunes.getByISBN(isbn).then (dataISBN) ->
         #         itunes.getByURI(dataISBN.uri).then (dataURI) ->
-        #             # dataURI.key.forEach (e)->
-        #             #     expect(dataURI[e]).toBe(dataISBN[e])
         #             expect(dataURI.title).toBe(dataISBN.title)
-        #             # expect(1).toBe(2)
         #             done()
-        #         .fail (data) ->
+        #         .fail (err) ->
+        #             console.error 'err:', err
         #             expect(1).toBe(2)
         #             done()
         #     .fail (data) ->
+        #         console.error 'errr:', data
         #         expect(1).toBe(2)
         #         done()
+                
         it 'should return invalidISBN', (done) ->
             itunes.getByISBN('foobar').then (data) ->
                 expect(1).not.toBe(1)
