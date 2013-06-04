@@ -21,10 +21,12 @@ describe 'googleBooks', ()->
                  
                     expect(dataURI).toEqual(dataISBN)
                     done()
-                .fail (data) ->
+                .fail (err) ->
+                    console.log 'GoogleBooks Api error: ' , JSON.stringify err 
                     expect(1).toBe(2)
                     done()
-            .fail (data) ->
+            .fail (err) ->
+                console.log 'GoogleBooks Api error: ' , JSON.stringify err 
                 expect(1).toBe(2)
                 done()
         it 'should return invalidURI if invalid uri is given', (done) ->
@@ -48,10 +50,12 @@ describe 'googleBooks', ()->
                     expect(dataURI).toEqual(dataISBN)
                     # expect(1).toBe(2)
                     done()
-                .fail (data) ->
+                .fail (err) ->
+                    console.log 'GoogleBooks Api error: ' , JSON.stringify err  
                     expect(1).toBe(2)
                     done()
-            .fail (data) ->
+            .fail (err) ->
+                console.log 'GoogleBooks Api error: ' , JSON.stringify err  
                 expect(1).toBe(2)
                 done()
         it 'should return invalidISBN if invalid isbn is given', (done) ->
