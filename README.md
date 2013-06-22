@@ -82,6 +82,19 @@ no parameters available
 #### parameters:
 no parameters available
 
+##Manager APIs
+### /books
+* `GET` -> retrieve the book objects
+
+### parameters:
+* `uri` -> the uri of the book
+
+### /prices
+* `GET` -> retrieve the updated objects of the books specified by the isbns parameter
+
+### parameters:
+* `isbns` -> array of isbn of books to be updaited
+
 #Details
 ##Platforms considered
 * half ebay 
