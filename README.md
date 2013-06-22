@@ -19,7 +19,8 @@ A set of extensible REST web services to discover and track book prices on diffe
     "refs": [{
         "source": "Amazon",
         "price": 12.34,
-        "date": "2013-06-03T21:14:59.742Z"
+        "date": "2013-06-03T21:14:59.742Z",
+        "uri": "http://ebayBooks.com/books/123455"
     }]
 },{
     
@@ -35,7 +36,8 @@ A set of extensible REST web services to discover and track book prices on diffe
     "refs": [{
         "source": "Ebay",
         "price": 12.34,
-        "date": "2013-06-03T21:14:59.742Z"
+        "date": "2013-06-03T21:14:59.742Z",
+        "uri": "http://ebayBooks.com/books/123455"
     }]
 }
 ```
@@ -70,10 +72,12 @@ no parameters available
     "source": "Ebay",
     "price": 12.34,
     "date": "2013-06-03T21:14:59.742Z"
+    "uri": "http://ebayBooks.com/books/123455"
 },{
     "source": "Amazon",
     "price": 11.99,
     "date": "2013-06-03T21:14:59.742Z"
+    "uri": "http://amazon.com/books/123455"
 }]
 ```
 * `PUT` -> not supported
