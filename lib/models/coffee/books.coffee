@@ -36,8 +36,16 @@ booksFactory = (baseModel, errors) ->
         if not validISBN(ISBN)
             return Q.reject errors.INVALID_ISBN
         @_insert 'books', book
+
+    books.replace = (book) ->
+        ISBN = book?.isbn
+        if not validISBN(ISBN)
+            return Q.reject errors.INVALID_ISBN
+        @_replace 'books', book
     
     books.query = (queryString) ->
+        if (typeof queryString) isnt "string"
+            return Q.reject errors.INVALID_QUERY
         matcher = new RegExp queryString
         filter = 
             $or: [
@@ -61,7 +69,7 @@ booksFactory = (baseModel, errors) ->
         filter = 
             isbn: ISBN
         update = 
-            $push: refs: $each: prices
+            $pushAll: refs: prices
         @_update('books', filter, update, false)    
 
     return books
