@@ -4,6 +4,8 @@ googleBooksMock = 'https://google/id431617573'
 Q = require 'q'
 di = require 'di'
 amazonBook = 'https://amazon'
+isbnArray = ['9782709638821','9782709638822', '9782709638823']
+realIsbnArray = ['9781451648539','9782709638821','9780316069359',]
 
 
 
@@ -57,14 +59,15 @@ describe 'manager', ()->
 
     it 'should be defined', () ->
         expect(manager).toBeDefined()
+        console.log manager
 
     describe 'returnItems', () ->
         it 'should be a function', ()->
-            expect(typeof manager.getItems).toBe('function')
+            expect(typeof manager.getBooks).toBe('function')
         it 'the return value of returnItems should be a promise', ()->
-            expect(Q.isPromise(manager.getItems(itunesBook))).toBe(true)
+            expect(Q.isPromise(manager.getBooks(itunesBook))).toBe(true)
         it 'should be an array', (done) ->
-            manager.getItems(itunesBook).then (data) ->
+            manager.getBooks(itunesBook).then (data) ->
                 expect(data).toBeAnArray
                 done()
             .fail ()->
@@ -72,7 +75,7 @@ describe 'manager', ()->
                 done()
 
         it 'given n plugin, all except one with the book A, should return n-1 items with the same isbn', (done)->
-            manager.getItems(amazonBookMock).then (data) ->
+            manager.getBooks(amazonBookMock).then (data) ->
                 equal = true
                 i = 0
 
@@ -88,7 +91,7 @@ describe 'manager', ()->
                 expect(1).not.toBe(1)
                 done()
         it 'given n plugin, all with the book A, should return n items with the same isbn', (done)->
-            manager.getItems(itunesBook).then (data) ->
+            manager.getBooks(itunesBook).then (data) ->
                 equal = true
                 i = 0
 
@@ -103,7 +106,7 @@ describe 'manager', ()->
                 expect(1).not.toBe(1)
                 done()
         it 'given n plugin, just one with book A, should return 1 item', (done)->
-            manager.getItems(googleBooksMock).then (data) ->
+            manager.getBooks(googleBooksMock).then (data) ->
                 expect(data.length).toBe 1
                 done()
 
@@ -111,18 +114,31 @@ describe 'manager', ()->
                 expect(1).not.toBe(1)
                 done()
         it 'should fail if a bad uri is given (with a right prefix)', (done)->
-            manager.getItems('https://itunes.apple.com').then (data) ->
+            manager.getBooks('https://itunes.apple.com').then (data) ->
                 expect(1).not.toBe(1);
                 done()
             .fail ()->
                 expect(1).toBe(1)
                 done()
         it 'should fail if a bad uri is given (with a unknown prefix)', (done)->
-            manager.getItems('foobar').then (data) ->
+            manager.getBooks('foobar').then (data) ->
                 expect(1).not.toBe(1);
                 done()
             .fail ()->
                 expect(1).toBe(1)
                 done()
 
+    describe 'updatePrices', () ->
+        it 'should return a promise', () -> 
+            expect(Q.isPromise( manager.updatePrices(isbnArray) ) ).toBe(true)
 
+        it 'the value resolved should be an array', (done) ->
+            manager.updatePrices(realIsbnArray).then (data) ->
+                expect(data).toBeAnArray
+                console.log (JSON.stringify data)
+                done()
+
+
+
+
+            
