@@ -8,21 +8,24 @@ var books = [{
         title: 'Steve Jobs',
         author: 'Walter Isaacson',
         isbn: '9782709638821',
-        date: '2013-06-03T12:28:44.415Z'
+        date: '2013-06-03T12:28:44.415Z',
+        source: 'itunes'
     }, {
         uri: 'https://itunes.apple.com/us/book/steve-jobs/id431617578?mt=11',
         price: 15,
         title: 'Steve B',
         author: 'Walter Isaacson',
         isbn: '9782709638822',
-        date: '2013-06-03T12:28:44.415Z'
+        date: '2013-06-03T12:28:44.415Z',
+        source: 'itunes'
     }, {
         uri: 'https://itunes.apple.com/us/book/steve-jobs/id431617578?mt=11',
         price: 17,
         title: 'Steve C',
         author: 'Walter Isaacson',
         isbn: '9782709638823',
-        date: '2013-06-03T12:28:44.415Z'
+        date: '2013-06-03T12:28:44.415Z',
+        source: 'itunes'
     },
 
 
