@@ -62,6 +62,10 @@ describe 'books module', () ->
     it 'should expose a create method', () ->
         expect(books.create).toBeDefined()
         expect(typeof books.create).toBe 'function'
+
+    it 'should expose a query method', () ->
+        expect(books.query).toBeDefined()
+        expect(typeof books.query).toBe 'function'
     
     describe 'getAll method', () ->
         beforeEach () ->
@@ -185,6 +189,7 @@ describe 'books module', () ->
             baseModelMock.expectInsert 'books', {}
             expect(books.create(validISBN13)).toBeAPromise()
 
+
         it 'should reject the promise if the book doesn\'t have a valid ISBN', ()->
             success = jasmine.createSpy()
             failure = jasmine.createSpy()
@@ -193,5 +198,38 @@ describe 'books module', () ->
                 expect(success).not.toHaveBeenCalled()
                 expect(failure).toHaveBeenCalledWith(errors.INVALID_ISBN)
                 done()
+
+    describe 'query method', () ->
+        it 'should return a promise', ()->
+            baseModelMock.expectGet 'books', {}
+            expect(books.query()).toBeAPromise()
+
+    describe 'addPrices', () ->
+        validISBN13 = '9780385537858'
+        it 'should return a promise', () ->
+            baseModelMock.expectModify 'books', {}
+            expect(books.addPrices()).toBeAPromise()
+
+        it 'should reject the promise if the book doesn\'t have a valid ISBN', ()->
+            success = jasmine.createSpy()
+            failure = jasmine.createSpy()
+            books.addPrices('INVALID ISBN',{}).then(success, failure)
+            .finally () ->
+                expect(success).not.toHaveBeenCalled()
+                expect(failure).toHaveBeenCalledWith(errors.INVALID_ISBN)
+                done()
+
+        it 'should resolve the promise if the ISBN is valid', ()->
+            success = jasmine.createSpy()
+            failure = jasmine.createSpy()
+            retval = {}
+            baseModelMock.expectModify 'books', retval
+            books.addPrices(validISBN13,{}).then(success, failure)
+            .finally () ->
+                expect(failure).not.toHaveBeenCalled()
+                expect(success).toHaveBeenCalledWith(retval)
+                done()
+
+
 
 

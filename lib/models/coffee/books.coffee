@@ -1,4 +1,8 @@
 Q = require 'q'
+
+validISBN = (ISBN) ->
+    (typeof ISBN) is 'string' and ISBN?.length is 13
+
 booksFactory = (baseModel, errors) ->
     books = Object.create(baseModel)
     books.getAll = (filter = {}, limit) ->
@@ -16,7 +20,7 @@ booksFactory = (baseModel, errors) ->
             return null
 
     books.getByISBN = (ISBN) ->
-        if (typeof ISBN) isnt 'string' or ISBN.length isnt 13
+        if not validISBN(ISBN)
             return Q.reject errors.INVALID_ISBN
         filter =
             isbn: ISBN
@@ -29,9 +33,36 @@ booksFactory = (baseModel, errors) ->
 
     books.create = (book) ->
         ISBN = book?.isbn
-        if (typeof ISBN) isnt 'string' or ISBN.length isnt 13
+        if not validISBN(ISBN)
             return Q.reject errors.INVALID_ISBN
         @_insert 'books', book
+    
+    books.query = (queryString) ->
+        matcher = new RegExp queryString
+        filter = 
+            $or: [
+                {isbn: 
+                    $regex: matcher
+                }
+                {title: 
+                    $regex: matcher
+                }
+                { author: 
+                    $regex: matcher
+                }
+            ]
+        @getAll(filter)
+
+    books.addPrices = (ISBN, prices) ->
+        if not validISBN(ISBN)
+            return Q.reject errors.INVALID_ISBN
+        if not Array.isArray prices
+            prices = [prices]
+        filter = 
+            isbn: ISBN
+        update = 
+            $push: refs: $each: prices
+        @_update('books', filter, update, false)    
 
     return books
 
