@@ -43,6 +43,6 @@ module.exports = ->
 
     _update: (collectionName, query, update, multi = false) ->
         deferred = Q.defer()
-        throw "Unexpected update on collection " + collectionName + " items: " + JSON.stringify(items)  if not cacheModify[collectionName] or cacheModify[collectionName].length <= 0
+        throw "Unexpected update on collection " + collectionName + " query: " + JSON.stringify(query) + " update: " + JSON.stringify(update)  if not cacheModify[collectionName] or cacheModify[collectionName].length <= 0
         deferred.resolve cacheModify[collectionName].shift()
         deferred.promise

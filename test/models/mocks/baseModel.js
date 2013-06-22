@@ -70,7 +70,7 @@
         }
         deferred = Q.defer();
         if (!cacheModify[collectionName] || cacheModify[collectionName].length <= 0) {
-          throw "Unexpected update on collection " + collectionName + " items: " + JSON.stringify(items);
+          throw "Unexpected update on collection " + collectionName + " query: " + JSON.stringify(query) + " update: " + JSON.stringify(update);
         }
         deferred.resolve(cacheModify[collectionName].shift());
         return deferred.promise;

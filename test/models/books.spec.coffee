@@ -202,7 +202,16 @@ describe 'books module', () ->
     describe 'query method', () ->
         it 'should return a promise', ()->
             baseModelMock.expectGet 'books', {}
-            expect(books.query()).toBeAPromise()
+            expect(books.query('')).toBeAPromise()
+        it 'should reject the promise if parameter is not a string', (done) ->
+            baseModelMock.expectGet 'books', {}
+            success = jasmine.createSpy()
+            failure = jasmine.createSpy()
+            books.query({}).then(success, failure)
+            .finally () ->
+                expect(success).not.toHaveBeenCalled()
+                expect(failure).toHaveBeenCalledWith(errors.INVALID_QUERY)
+                done()
 
     describe 'addPrices', () ->
         validISBN13 = '9780385537858'
@@ -229,6 +238,8 @@ describe 'books module', () ->
                 expect(failure).not.toHaveBeenCalled()
                 expect(success).toHaveBeenCalledWith(retval)
                 done()
+
+
 
 
 
