@@ -31,6 +31,7 @@ booksFactory = (baseModel, errors) ->
                 return books[0]
             return null
 
+
     books.create = (book) ->
         ISBN = book?.isbn
         if not validISBN(ISBN)
