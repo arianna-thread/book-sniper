@@ -99,6 +99,22 @@ no parameters available
 ### parameters:
 * `isbns` -> array of isbn of books to be updaited
 
+
+##Core APIs
+
+### /books
+* `GET` -> retrieve the book Object/theArray of book Objects
+
+#### parameters:
+
+Key | Description | Output
+--- | --- | ---
+`uri` |uri of the book description inside one of the platforms | book Object
+`query` |plain text to search in the books metadata | Array of book Objects
+
+### /books/{isbn}
+* `GET` -> retrieve the book Object given its isbn
+
 #Details
 ##Platforms considered
 * half ebay 
