@@ -1,6 +1,8 @@
 itunesBook = 'https://itunes.apple.com/us/book/steve-jobs/id431617578?mt=11'
 amazonBookMock = 'https://amazon/id431617573'
 googleBooksMock = 'https://google/id431617573'
+config = __dirname + '/../../../lib/pluginManager/pluginConfig.json';
+
 Q = require 'q'
 di = require 'di'
 fs = require('fs')
@@ -30,9 +32,10 @@ config2 =
 
 
 m = new di.Module()
-m.value 'pluginsConfiguration', config2
-m.factory 'manager', require '../../../lib/pluginManager/manager.js'
-m.factory 'managerServer', require '../../../lib/pluginManager/pluginManager.js'
+m.value('pluginsConfiguration', config1);
+m.value('configurationPath', config);
+m.factory('manager', require('../../../lib/pluginManager/manager'));
+m.factory('managerServer', require('../../../lib/pluginManager/pluginManager.js'));
 
 injector = new di.Injector([m])
 managerServer = injector.get 'managerServer'

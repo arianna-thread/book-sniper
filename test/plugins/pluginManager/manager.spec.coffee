@@ -30,7 +30,6 @@ config2 =
 
 m = new di.Module()
 m.value 'pluginsConfiguration' , config2
-m.value 'configurationPath', "#{__dirname} /mockConfiguration"
 m.factory 'manager' , require '../../../lib/pluginManager/manager.js'
 
 injector = new di.Injector([m])
@@ -134,7 +133,7 @@ describe 'manager', ()->
             expect(Q.isPromise( manager.updatePrices(isbnArray) ) ).toBe(true)
 
         it 'the value resolved should be an array', (done) ->
-            manager.updatePrices(realIsbnArray).then (data) ->
+            manager.updatePrices(isbnArray).then (data) ->
                 expect(data).toBeAnArray
                 console.log (JSON.stringify data)
                 done()

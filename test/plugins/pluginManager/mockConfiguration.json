@@ -6,5 +6,9 @@
 	"mockGoogle": {
 		"path": "../../test/plugins/mocks/mockGoogle.js",
 		"options": {}
+	},
+	"mockItunes": {
+		"path": "../../test/plugins/mocks/mockItunes.js",
+		"options": {}
 	}
 }

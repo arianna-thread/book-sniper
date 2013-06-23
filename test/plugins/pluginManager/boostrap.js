@@ -17,6 +17,7 @@ var config1 = {
         'path': './plugins/ebay/ebay.js'
     }
 };
+
 var config2 = {
     mockAmazon: {
         'path': __dirname + '/../mocks/mockAmazon'
