@@ -1,0 +1,10 @@
+{
+	"mockAmazon": {
+		"path": "../../test/plugins/mocks/mockAmazon.js",
+		"options": {}
+	},
+	"mockGoogle": {
+		"path": "../../test/plugins/mocks/mockGoogle.js",
+		"options": {}
+	}
+}

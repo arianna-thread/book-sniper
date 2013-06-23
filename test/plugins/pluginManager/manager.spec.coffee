@@ -5,7 +5,7 @@ Q = require 'q'
 di = require 'di'
 amazonBook = 'https://amazon'
 isbnArray = ['9782709638821','9782709638822', '9782709638823']
-realIsbnArray = ['9781451648539','9782709638821','9780316069359',]
+realIsbnArray = ['9781451648539','9782709638821','9780316069359']
 
 
 
@@ -30,6 +30,7 @@ config2 =
 
 m = new di.Module()
 m.value 'pluginsConfiguration' , config2
+m.value 'configurationPath', "#{__dirname} /mockConfiguration"
 m.factory 'manager' , require '../../../lib/pluginManager/manager.js'
 
 injector = new di.Injector([m])
