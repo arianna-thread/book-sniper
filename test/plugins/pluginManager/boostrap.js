@@ -3,20 +3,7 @@ var mockconfig = __dirname + '/mockConfiguration.json';
 var config = __dirname + '/../../../lib/pluginManager/pluginConfig.json';
 var di = require('di');
 var m = new di.Module();
-var config1 = {
-    'amazon': {
-        'path': './plugins/amazon/amazon.js'
-    },
-    'googleBooks': {
-        'path': './plugins/googleBooks/googleBooks.js'
-    },
-    'itunes': {
-        'path': './plugins/itunes/itunes.js'
-    },
-    'ebay': {
-        'path': './plugins/ebay/ebay.js'
-    }
-};
+var config1 = require(config);
 var config2 = {
     mockAmazon: {
         'path': __dirname + '/../mocks/mockAmazon'
