@@ -10,7 +10,7 @@ booksFactory = (baseModel, errors) ->
 
     books.getByUri = (uri) ->
         if typeof uri isnt 'string' then return Q.reject "Expected #{uri} to be a string"
-        filter = 
+        filter =
             'refs.uri': uri
         @getAll(filter).then (books) ->
             if books.length > 1
@@ -42,20 +42,20 @@ booksFactory = (baseModel, errors) ->
         if not validISBN(ISBN)
             return Q.reject errors.INVALID_ISBN
         @_replace 'books', book
-    
+
     books.query = (queryString) ->
         if (typeof queryString) isnt "string"
             return Q.reject errors.INVALID_QUERY
-        matcher = new RegExp queryString
-        filter = 
+        matcher = new RegExp queryString, "i"
+        filter =
             $or: [
-                {isbn: 
+                {isbn:
                     $regex: matcher
                 }
-                {title: 
+                {title:
                     $regex: matcher
                 }
-                { author: 
+                { author:
                     $regex: matcher
                 }
             ]
@@ -66,11 +66,11 @@ booksFactory = (baseModel, errors) ->
             return Q.reject errors.INVALID_ISBN
         if not Array.isArray prices
             prices = [prices]
-        filter = 
+        filter =
             isbn: ISBN
-        update = 
+        update =
             $pushAll: refs: prices
-        @_update('books', filter, update, false)    
+        @_update('books', filter, update, false)
 
     return books
 

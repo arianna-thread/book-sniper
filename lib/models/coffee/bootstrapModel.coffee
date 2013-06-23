@@ -12,8 +12,9 @@ injector = new di.Injector [m]
 app = injector.get 'app'
 config = injector.get 'config'
 
+
 app.listen config.restPort, config.restHost, (err) ->
-    if err 
+    if err
         console.error "Error while starting REST server :#{err}"
         return
     console.log "Model REST server started."
