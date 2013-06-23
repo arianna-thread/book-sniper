@@ -1,15 +1,18 @@
 {
-	"amazon": {
-		"path": "./plugins/amazon/amazon.js",
-		"options": {}
-},	"itunes": {
-	"path": "./plugins/itunes/itunes.js",
-	"options": {}
-},
-	"ebay": {
-		"path": "./plugins/ebay/ebay.js",
-		"options": {}
-	}
-
-
+    "amazon": {
+        "path": "./plugins/amazon/amazon.js",
+        "options": {}
+    },
+    "itunes": {
+        "path": "./plugins/itunes/itunes.js",
+        "options": {}
+    },
+    "ebay": {
+        "path": "./plugins/ebay/ebay.js",
+        "options": {}
+    },
+    "googleBooks": {
+        "path": "./plugins/googleBooks/googleBooks.js",
+        "options": {}
+    }
 }
