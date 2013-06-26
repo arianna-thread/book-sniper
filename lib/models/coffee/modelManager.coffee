@@ -3,21 +3,24 @@ Q = require 'q'
 module.exports = (books, errors) ->
     searchByUri: (uri) ->
         books.getByUri(uri).then (book) ->
-            if book? 
-                book 
-            else 
-                throw errors.NOT_FOUND 
+            if book?
+                book
+            else
+                throw errors.NOT_FOUND
 
     getByISBN: (ISBN) ->
         books.getByISBN(ISBN).then (book) ->
-            if book? 
-                book 
-            else 
+            if book?
+                book
+            else
                 throw errors.NOT_FOUND
 
     fullTextQuery: (query) ->
         books.query(query)
 
+    getISBNs: () ->
+        books.getAll().then (books) ->
+            (book.isbn for book in books)
 
     createBook: (book) ->
         if checkBook(book) is false
@@ -34,8 +37,8 @@ module.exports = (books, errors) ->
             else
                 books.getByISBN ISBN
 
-    
+
 
 checkBook = (book) ->
     book.title? and book.isbn? and Array.isArray(book.refs)
-    
+

@@ -16,7 +16,7 @@ module.exports = (modelManager, books) ->
             promise = modelManager.searchByUri(uri)
         else if query
             promise = modelManager.fullTextQuery(query)
-        else 
+        else
             promise = books.getAll()
         promise.then (data) ->
             sendResponse data, res
@@ -24,7 +24,15 @@ module.exports = (modelManager, books) ->
             sendResponse data, res
         .fail (err) ->
             console.error "Error while processing request on /books/: #{JSON.stringify(err)}"
-    
+
+    app.get '/isbns', (req, res) ->
+        modelManager.getISBNs().then (data) ->
+            sendResponse data, res
+        ,(data) ->
+            sendResponse data, res
+        .fail (err) ->
+            console.error "Error while processing request on /books/: #{JSON.stringify(err)}"
+
     app.post '/books', (req, res) ->
         book = req.body
         modelManager.createBook(book).then (data) ->
@@ -57,12 +65,12 @@ module.exports = (modelManager, books) ->
         modelManager.getByISBN(isbn).then (data) ->
             if data.code #error to be handled
                 res.status(data.code).json(data)
-            else 
+            else
                 res.json(data.refs);
         ,(data) ->
             sendResponse data, res
         .fail (err) ->
-            console.error "Error while processing request on /books/#{isbn}/refs: #{JSON.stringify(err)}"    
+            console.error "Error while processing request on /books/#{isbn}/refs: #{JSON.stringify(err)}"
 
     app.post '/books/:isbn/refs', (req, res) ->
         isbn = req.params.isbn
@@ -73,11 +81,11 @@ module.exports = (modelManager, books) ->
             sendResponse data, res
         .fail (err) ->
             console.error "Error while processing request on /books/#{isbn}/refs: #{JSON.stringify(err)}"
-    
+
     return app
-            
+
 sendResponse = (data, res) ->
     if data.code #error to be handled
         res.status(data.code).json(data)
-    else 
+    else
         res.json(data)
