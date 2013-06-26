@@ -1,7 +1,6 @@
 'use strict';
 var Q = require('q');
 var errors = require('../../../errors/pluginError.js');
-
 var books = [{
         uri: 'https://amazon/id431617571',
         price: 13.99,
@@ -35,7 +34,6 @@ var books = [{
 
 exports['getByURI'] = function(uri) {
     var defer = Q.defer();
-
     var booksSelected = books.filter(function(element) {
         if (element.uri === uri)
             return true;

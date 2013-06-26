@@ -9,16 +9,6 @@ realIsbnArray = ['9781451648539','9782709638821','9780316069359']
 
 
 
-config1 = 
-    "amazon": 
-        "path": "./plugins/amazon/amazon.js"
-    "googleBooks": 
-        "path": "./plugins/googleBooks/googleBooks.js"
-    "itunes": 
-        "path": "./plugins/itunes/itunes.js"
-    "ebay": 
-        "path": "./plugins/ebay/ebay.js"
-
 config2 = 
     "mockAmazon": 
         "path": "../../test/plugins/mocks/mockAmazon.js"
@@ -26,7 +16,7 @@ config2 =
         "path": "../../test/plugins/mocks/mockItunes.js"
     "mockGoogle": 
         "path": "../../test/plugins/mocks/mockGoogle.js"
-    
+
 
 m = new di.Module()
 m.value 'pluginsConfiguration' , config2
@@ -78,6 +68,7 @@ describe 'manager', ()->
             manager.getBooks(amazonBookMock).then (data) ->
                 equal = true
                 i = 0
+                console.log data
 
                 while i < data.length - 1
                     # console.log data[i].isbn
@@ -88,13 +79,13 @@ describe 'manager', ()->
                 done()
 
             .fail ()->
+                console.log 'one exept error'
                 expect(1).not.toBe(1)
                 done()
         it 'given n plugin, all with the book A, should return n items with the same isbn', (done)->
             manager.getBooks(itunesBook).then (data) ->
                 equal = true
                 i = 0
-
                 while i < data.length - 1
                     equal = false  if data[i].isbn isnt data[i + 1].isbn
                     i++
@@ -128,15 +119,15 @@ describe 'manager', ()->
                 expect(1).toBe(1)
                 done()
 
-    describe 'updatePrices', () ->
-        it 'should return a promise', () -> 
-            expect(Q.isPromise( manager.updatePrices(isbnArray) ) ).toBe(true)
+    # describe 'updatePrices', () ->
+    #     it 'should return a promise', () -> 
+    #         expect(Q.isPromise( manager.updatePrices(isbnArray) ) ).toBe(true)
 
-        it 'the value resolved should be an array', (done) ->
-            manager.updatePrices(isbnArray).then (data) ->
-                expect(data).toBeAnArray
-                console.log (JSON.stringify data)
-                done()
+    #     it 'the value resolved should be an array', (done) ->
+    #         manager.updatePrices(isbnArray).then (data) ->
+    #             expect(data).toBeAnArray
+    #             console.log (JSON.stringify data)
+    #             done()
 
 
 
