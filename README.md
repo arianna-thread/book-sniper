@@ -2,9 +2,7 @@ Book sniper [![Build Status](https://travis-ci.org/arianna-thread/book-sniper.pn
 ===========
 A set of extensible REST web services to discover and track book prices on differents platforms.
 
-#Architecture (TODO)
-
-#APIs (partial)
+#APIs 
 
 ##Data Store APIs
 
